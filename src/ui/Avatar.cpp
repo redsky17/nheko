@@ -1,17 +1,25 @@
 #include <QPainter>
 #include <QPainterPath>
-#include <QSettings>
+#include <QSvgRenderer>
 
 #include "AvatarProvider.h"
+#include "UserSettingsPage.h"
 #include "Utils.h"
+#include "jdenticoninterface.h"
 #include "ui/Avatar.h"
 
 Avatar::Avatar(QWidget *parent, int size)
   : QWidget(parent)
   , size_(size)
+  , jdenticonInterface_{Jdenticon::getJdenticonInterface()}
 {
-        type_   = ui::AvatarType::Letter;
-        letter_ = "A";
+        if (UserSettings::instance()->useIdenticon()) {
+                type_ = ui::AvatarType::Jdenticon;
+                user_ = "?";
+        } else {
+                type_   = ui::AvatarType::Letter;
+                letter_ = "?";
+        }
 
         QFont _font(font());
         _font.setPointSizeF(ui::FontSize);
@@ -58,10 +66,39 @@ Avatar::setBackgroundColor(const QColor &color)
 }
 
 void
+Avatar::setFiller(const QString &id)
+{
+        if (UserSettings::instance()->useIdenticon()) {
+                type_ = ui::AvatarType::Jdenticon;
+                user_ = id;
+        } else {
+                // If it's a matrix id we use the second letter.
+                if (id.size() > 1 && id.at(0) == '@')
+                        letter_ = QChar(id.at(1));
+                else
+                        letter_ = utils::firstChar(id);
+                type_ = ui::AvatarType::Letter;
+        }
+        update();
+}
+
+void
 Avatar::setLetter(const QString &letter)
 {
-        letter_ = letter;
-        type_   = ui::AvatarType::Letter;
+        // If it's a matrix id we use the second letter.
+        if (letter.size() > 1 && letter.at(0) == '@')
+                letter_ = QChar(letter.at(1));
+        else
+                letter_ = utils::firstChar(letter);
+        type_ = ui::AvatarType::Letter;
+        update();
+}
+
+void
+Avatar::setJdenticon(const QString &userId)
+{
+        type_ = ui::AvatarType::Jdenticon;
+        user_ = userId;
         update();
 }
 
@@ -118,7 +155,7 @@ Avatar::setDevicePixelRatio(double ratio)
 void
 Avatar::paintEvent(QPaintEvent *)
 {
-        bool rounded = QSettings().value("user/avatar_circles", true).toBool();
+        bool rounded = UserSettings::instance()->avatarCircles();
 
         QPainter painter(this);
 
@@ -156,6 +193,12 @@ Avatar::paintEvent(QPaintEvent *)
                 painter.setPen(textColor());
                 painter.setBrush(Qt::NoBrush);
                 painter.drawText(r.translated(0, -1), Qt::AlignCenter, letter_);
+                break;
+        }
+        case ui::AvatarType::Jdenticon: {
+                QSvgRenderer renderer;
+                renderer.load(jdenticonInterface_->generate(user_, size_).toUtf8());
+                renderer.render(&painter);
                 break;
         }
         default:

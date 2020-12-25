@@ -29,6 +29,7 @@
 #include "Cache_p.h"
 #include "ChatPage.h"
 #include "Config.h"
+#include "JdenticonProvider.h"
 #include "Logging.h"
 #include "LoginPage.h"
 #include "MainWindow.h"
@@ -174,10 +175,6 @@ MainWindow::MainWindow(QWidget *parent)
                 }
 
                 showChatPage();
-        }
-
-        if (loadJdenticonPlugin()) {
-                nhlog::ui()->info("loaded jdenticon.");
         }
 }
 
@@ -520,29 +517,6 @@ MainWindow::showDialog(QWidget *dialog)
         dialog->show();
 }
 
-bool
-MainWindow::loadJdenticonPlugin()
-{
-        QDir pluginsDir(qApp->applicationDirPath());
-
-        bool plugins = pluginsDir.cd("plugins");
-        if (plugins) {
-                foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
-                        QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
-                        QObject *plugin = pluginLoader.instance();
-                        if (plugin) {
-                                jdenticonInteface_ = qobject_cast<JdenticonInterface *>(plugin);
-                                if (jdenticonInteface_) {
-                                        nhlog::ui()->info("Found jdenticon plugin.");
-                                        return true;
-                                }
-                        }
-                }
-        }
-
-        nhlog::ui()->info("jdenticon plugin not found.");
-        return false;
-}
 void
 MainWindow::showWelcomePage()
 {

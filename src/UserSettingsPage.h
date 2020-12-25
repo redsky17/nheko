@@ -23,6 +23,7 @@
 #include <QSharedPointer>
 #include <QWidget>
 
+#include "JdenticonProvider.h"
 #include <optional>
 
 class Toggle;
@@ -96,6 +97,8 @@ class UserSettings : public QObject
           QString accessToken READ accessToken WRITE setAccessToken NOTIFY accessTokenChanged)
         Q_PROPERTY(QString deviceId READ deviceId WRITE setDeviceId NOTIFY deviceIdChanged)
         Q_PROPERTY(QString homeserver READ homeserver WRITE setHomeserver NOTIFY homeserverChanged)
+        Q_PROPERTY(
+          bool useIdenticon READ useIdenticon WRITE setUseIdenticon NOTIFY useIdenticonChanged)
 
         UserSettings();
 
@@ -151,6 +154,7 @@ public:
         void setDeviceId(QString deviceId);
         void setHomeserver(QString homeserver);
         void setHiddenTags(QStringList hiddenTags);
+        void setUseIdenticon(bool state);
 
         QString theme() const { return !theme_.isEmpty() ? theme_ : defaultTheme_; }
         bool messageHoverHighlight() const { return messageHoverHighlight_; }
@@ -199,6 +203,7 @@ public:
         QString deviceId() const { return deviceId_; }
         QString homeserver() const { return homeserver_; }
         QStringList hiddenTags() const { return hiddenTags_; }
+        bool useIdenticon() const { return useIdenticon_ && JdenticonProvider::isAvailable(); }
 
 signals:
         void groupViewStateChanged(bool state);
@@ -236,6 +241,7 @@ signals:
         void accessTokenChanged(QString accessToken);
         void deviceIdChanged(QString deviceId);
         void homeserverChanged(QString homeserver);
+        void useIdenticonChanged(bool state);
 
 private:
         // Default to system theme if QT_QPA_PLATFORMTHEME var is set.
@@ -279,6 +285,7 @@ private:
         QString deviceId_;
         QString homeserver_;
         QStringList hiddenTags_;
+        bool useIdenticon_;
 
         static QSharedPointer<UserSettings> instance_;
 };
@@ -337,6 +344,7 @@ private:
         Toggle *desktopNotifications_;
         Toggle *alertOnNotification_;
         Toggle *avatarCircles_;
+        Toggle *useIdenticon_;
         Toggle *useStunServer_;
         Toggle *decryptSidebar_;
         Toggle *privacyScreen_;

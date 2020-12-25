@@ -30,8 +30,8 @@ MemberItem::MemberItem(const RoomMember &member, QWidget *parent)
         textLayout_->setSpacing(0);
 
         avatar_ = new Avatar(this, 44);
-        avatar_->setLetter(utils::firstChar(member.display_name));
 
+        avatar_->setFiller(member.user_id);
         avatar_->setImage(ChatPage::instance()->currentRoom(), member.user_id);
 
         QFont nameFont;

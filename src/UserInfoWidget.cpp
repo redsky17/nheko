@@ -201,7 +201,7 @@ UserInfoWidget::setDisplayName(const QString &name)
                 display_name_ = name;
 
         displayNameLabel_->setText(display_name_);
-        userAvatar_->setLetter(QChar(display_name_[0]));
+        userAvatar_->setFiller(display_name_);
         update();
 }
 

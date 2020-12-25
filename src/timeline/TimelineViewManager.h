@@ -12,6 +12,7 @@
 
 #include "Cache.h"
 #include "CallManager.h"
+#include "JdenticonProvider.h"
 #include "Logging.h"
 #include "TimelineModel.h"
 #include "Utils.h"
@@ -150,6 +151,7 @@ private:
         MxcImageProvider *imgProvider;
         ColorImageProvider *colorImgProvider;
         BlurhashProvider *blurhashProvider;
+        JdenticonProvider *jdenticonProvider;
 
         QHash<QString, QSharedPointer<TimelineModel>> models;
         TimelineModel *timeline_  = nullptr;
