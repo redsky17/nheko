@@ -1,8 +1,8 @@
 #pragma once
 
+#include <QImage>
 #include <QQuickAsyncImageProvider>
 #include <QQuickImageResponse>
-#include <QImage>
 #include <QThreadPool>
 
 #include <mtx/common.hpp>

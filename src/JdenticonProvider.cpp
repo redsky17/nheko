@@ -1,12 +1,10 @@
 #include "JdenticonProvider.h"
 
+#include <QApplication>
 #include <QDir>
 #include <QPainter>
 #include <QPluginLoader>
 #include <QSvgRenderer>
-#include <QDir>
-#include <QPluginLoader>
-#include <QApplication>
 
 #include <mtxclient/crypto/client.hpp>
 
@@ -61,8 +59,9 @@ getJdenticonInterface()
                                         }
                                 }
                         }
-                } else
+                } else {
                         nhlog::ui()->info("jdenticon plugin not found.");
+                }
         }
 
         return interface;
