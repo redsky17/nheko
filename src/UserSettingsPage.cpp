@@ -95,7 +95,7 @@ UserSettings::load(std::optional<QString> profile)
         theme_                = settings.value("user/theme", defaultTheme_).toString();
         font_                 = settings.value("user/font_family", "default").toString();
         avatarCircles_        = settings.value("user/avatar_circles", true).toBool();
-        useIdenticon_        = settings.value("user/use_identicon", true).toBool();
+        useIdenticon_         = settings.value("user/use_identicon", true).toBool();
         decryptSidebar_       = settings.value("user/decrypt_sidebar", true).toBool();
         privacyScreen_        = settings.value("user/privacy_screen", false).toBool();
         privacyScreenTimeout_ = settings.value("user/privacy_screen_timeout", 0).toInt();
