@@ -5,6 +5,7 @@
 #include <QWidget>
 
 #include "Theme.h"
+#include "jdenticoninterface.h"
 
 class Avatar : public QWidget
 {
@@ -19,7 +20,9 @@ public:
         void setBackgroundColor(const QColor &color);
         void setImage(const QString &avatar_url);
         void setImage(const QString &room, const QString &user);
+        void setFiller(const QString &id);
         void setLetter(const QString &letter);
+        void setJdenticon(const QString &userId);
         void setTextColor(const QColor &color);
         void setDevicePixelRatio(double ratio);
 
@@ -41,4 +44,5 @@ private:
         QColor text_color_;
         QPixmap pixmap_;
         int size_;
+        JdenticonInterface *jdenticonInterface_;
 };

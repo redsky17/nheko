@@ -28,8 +28,15 @@ Rectangle {
         font.pixelSize: avatar.height / 2
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        visible: img.status != Image.Ready
+        visible: img.status != Image.Ready && !Settings.useIdenticon
         color: colors.text
+    }
+
+    Image {
+        id: identicon
+        anchors.fill: parent
+        visible: img.status != Image.Ready && Settings.useIdenticon
+        source: Settings.useIdenticon ? "image://jdenticon/" + userid : ""
     }
 
     Image {

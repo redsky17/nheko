@@ -154,6 +154,4 @@ private:
         //! Overlay modal used to project other widgets.
         OverlayModal *modal_       = nullptr;
         LoadingIndicator *spinner_ = nullptr;
-
-        JdenticonInterface *jdenticonInteface_ = nullptr;
 };

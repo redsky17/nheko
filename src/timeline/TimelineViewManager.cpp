@@ -92,6 +92,7 @@ TimelineViewManager::TimelineViewManager(CallManager *callManager, ChatPage *par
   : imgProvider(new MxcImageProvider())
   , colorImgProvider(new ColorImageProvider())
   , blurhashProvider(new BlurhashProvider())
+  , jdenticonProvider(new JdenticonProvider())
   , callManager_(callManager)
 {
         qRegisterMetaType<mtx::events::msg::KeyVerificationAccept>();
@@ -187,6 +188,8 @@ TimelineViewManager::TimelineViewManager(CallManager *callManager, ChatPage *par
         view->engine()->addImageProvider("MxcImage", imgProvider);
         view->engine()->addImageProvider("colorimage", colorImgProvider);
         view->engine()->addImageProvider("blurhash", blurhashProvider);
+        if (JdenticonProvider::isAvailable())
+                view->engine()->addImageProvider("jdenticon", jdenticonProvider);
         view->setSource(QUrl("qrc:///qml/TimelineView.qml"));
 
         connect(parent, &ChatPage::themeChanged, this, &TimelineViewManager::updateColorPalette);

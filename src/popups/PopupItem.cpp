@@ -44,7 +44,7 @@ RoomItem::RoomItem(QWidget *parent, const RoomSearchResult &res)
         auto name = QFontMetrics(QFont()).elidedText(
           QString::fromStdString(res.info.name), Qt::ElideRight, parentWidget()->width() - 10);
 
-        avatar_->setLetter(utils::firstChar(name));
+        avatar_->setFiller(name);
 
         roomName_ = new QLabel(name, this);
         roomName_->setMargin(0);
@@ -68,9 +68,9 @@ RoomItem::updateItem(const RoomSearchResult &result)
 
         roomName_->setText(name);
 
-        // if there is not an avatar set for the room, we want to at least show the letter
+        // if there is not an avatar set for the room, we want to at least show the filler
         // correctly!
-        avatar_->setLetter(utils::firstChar(name));
+        avatar_->setFiller(name);
         if (!result.info.avatar_url.empty())
                 avatar_->setImage(QString::fromStdString(result.info.avatar_url));
 }

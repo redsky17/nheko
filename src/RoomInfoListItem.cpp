@@ -90,7 +90,7 @@ RoomInfoListItem::init(QWidget *parent)
         ripple_overlay_->setClipping(true);
 
         avatar_ = new Avatar(nullptr, wm.iconSize);
-        avatar_->setLetter(utils::firstChar(roomName_));
+        avatar_->setFiller(roomName_);
         avatar_->resize(wm.iconSize, wm.iconSize);
 
         unreadCountFont_.setPointSizeF(unreadCountFont_.pointSizeF() * 0.8);
@@ -522,7 +522,7 @@ void
 RoomInfoListItem::setAvatar(const QString &avatar_url)
 {
         if (avatar_url.isEmpty())
-                avatar_->setLetter(utils::firstChar(roomName_));
+                avatar_->setFiller(roomName_);
         else
                 avatar_->setImage(avatar_url);
 }

@@ -39,11 +39,7 @@ ReceiptItem::ReceiptItem(QWidget *parent,
         auto displayName = cache::displayName(room_id, user_id);
 
         avatar_ = new Avatar(this, 44);
-        avatar_->setLetter(utils::firstChar(displayName));
-
-        // If it's a matrix id we use the second letter.
-        if (displayName.size() > 1 && displayName.at(0) == '@')
-                avatar_->setLetter(QChar(displayName.at(1)));
+        avatar_->setFiller(displayName);
 
         userName_ = new QLabel(displayName, this);
         userName_->setFont(nameFont);
