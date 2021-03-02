@@ -266,7 +266,7 @@ ApplicationWindow {
 
         Button {
             Layout.alignment: Qt.AlignRight
-            text: "Ok"
+            text: "OK"
             onClicked: close()
         }
 
