@@ -2,6 +2,11 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+#pragma once
+
+#include <Qt> // for OS defines
+
+#ifndef Q_OS_ANDROID
 #include "httplib.h"
 
 #include <QObject>
@@ -26,3 +31,4 @@ private:
         httplib::Server svr;
         int port = 0;
 };
+#endif

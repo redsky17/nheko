@@ -18,13 +18,16 @@
 #include "Logging.h"
 #include "LoginPage.h"
 #include "MatrixClient.h"
-#include "SSOHandler.h"
 #include "UserSettingsPage.h"
 #include "ui/FlatButton.h"
 #include "ui/LoadingIndicator.h"
 #include "ui/OverlayModal.h"
 #include "ui/RaisedButton.h"
 #include "ui/TextField.h"
+
+#ifndef Q_OS_ANDROID
+#include "SSOHandler.h"
+#endif
 
 Q_DECLARE_METATYPE(LoginPage::LoginMethod)
 
@@ -144,15 +147,19 @@ LoginPage::LoginPage(QWidget *parent)
         login_button_->setFontSize(20);
         login_button_->setCornerRadius(3);
 
+#ifndef Q_OS_ANDROID
         sso_login_button_ = new RaisedButton(tr("SSO LOGIN"), this);
         sso_login_button_->setMinimumSize(150, 65);
         sso_login_button_->setFontSize(20);
         sso_login_button_->setCornerRadius(3);
         sso_login_button_->setVisible(false);
+#endif
 
         button_layout_->addStretch(1);
         button_layout_->addWidget(login_button_);
+#ifndef Q_OS_ANDROID
         button_layout_->addWidget(sso_login_button_);
+#endif
         button_layout_->addStretch(1);
 
         error_label_ = new QLabel(this);
@@ -178,9 +185,12 @@ LoginPage::LoginPage(QWidget *parent)
         connect(login_button_, &RaisedButton::clicked, this, [this]() {
                 onLoginButtonClicked(passwordSupported ? LoginMethod::Password : LoginMethod::SSO);
         });
+
+#ifndef Q_OS_ANDROID
         connect(sso_login_button_, &RaisedButton::clicked, this, [this]() {
                 onLoginButtonClicked(LoginMethod::SSO);
         });
+#endif
         connect(this,
                 &LoginPage::showErrorMessage,
                 this,
@@ -375,7 +385,9 @@ LoginPage::versionOk(bool passwordSupported_, bool ssoSupported_)
         matrixidLayout_->removeWidget(spinner_);
         spinner_->stop();
 
+#ifndef Q_OS_ANDROID
         sso_login_button_->setVisible(ssoSupported);
+#endif
         login_button_->setVisible(passwordSupported);
 
         if (serverInput_->isVisible())
@@ -435,6 +447,7 @@ LoginPage::onLoginButtonClicked(LoginMethod loginMethod)
                           emit loginOk(res);
                   });
         } else {
+#ifndef Q_OS_ANDROID
                 auto sso = new SSOHandler();
                 connect(sso, &SSOHandler::ssoSuccess, this, [this, sso](std::string token) {
                         mtx::requests::Login req{};
@@ -472,6 +485,7 @@ LoginPage::onLoginButtonClicked(LoginMethod loginMethod)
 
                 QDesktopServices::openUrl(
                   QString::fromStdString(http::client()->login_sso_redirect(sso->url())));
+#endif
         }
 
         emit loggingIn();

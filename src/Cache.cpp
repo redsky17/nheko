@@ -45,7 +45,12 @@ static const std::string_view CACHE_FORMAT_VERSION_KEY("cache_format_version");
 
 constexpr size_t MAX_RESTORED_MESSAGES = 30'000;
 
-constexpr auto DB_SIZE    = 32ULL * 1024ULL * 1024ULL * 1024ULL; // 32 GB
+// Android builds don't like this to be constexpr
+#ifndef Q_OS_ANDROID
+constexpr
+#endif
+  auto DB_SIZE = 32ULL * 1024ULL * 1024ULL * 1024ULL; // 32 GB
+
 constexpr auto MAX_DBS    = 32384UL;
 constexpr auto BATCH_SIZE = 100;
 

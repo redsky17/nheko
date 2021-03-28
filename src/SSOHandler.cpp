@@ -2,6 +2,9 @@
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+#include <Qt> // for platform definitions
+
+#ifndef Q_OS_ANDROID // sso is currently not supported for Android
 #include "SSOHandler.h"
 
 #include <QTimer>
@@ -55,3 +58,5 @@ SSOHandler::url() const
 {
         return "http://localhost:" + std::to_string(port) + "/sso";
 }
+
+#endif

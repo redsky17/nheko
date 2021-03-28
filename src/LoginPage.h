@@ -81,6 +81,9 @@ private:
         {
 #if defined(Q_OS_MAC)
                 return "Nheko on macOS";
+// Android is before Linux because it is also detected as Linux
+#elif defined(Q_OS_ANDROID)
+                return "Nheko on Android";
 #elif defined(Q_OS_LINUX)
                 return "Nheko on Linux";
 #elif defined(Q_OS_WIN)

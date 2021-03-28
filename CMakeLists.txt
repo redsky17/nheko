@@ -332,7 +332,7 @@ set(SRC_FILES
 	src/ui/ToggleButton.cpp
 	src/ui/UserProfile.cpp
 
-	# Generic notification stuff
+    # Generic notification stuff
 	src/notifications/Manager.cpp
 
 	src/AvatarProvider.cpp
@@ -353,8 +353,7 @@ set(SRC_FILES
 	src/MatrixClient.cpp
 	src/MxcImageProvider.cpp
 	src/Olm.cpp
-	src/RegisterPage.cpp
-	src/SSOHandler.cpp
+    src/RegisterPage.cpp
 	src/TrayIcon.cpp
 	src/UserSettingsPage.cpp
 	src/UsersModel.cpp
@@ -366,6 +365,11 @@ set(SRC_FILES
 
 	third_party/blurhash/blurhash.cpp
 	)
+
+# Android currently doesn't support SSO.
+if(NOT ANDROID)
+	set(SRC_FILES ${SRC_FILES} src/SSOHandler.cpp)
+endif()
 
 
 include(FeatureSummary)
@@ -557,8 +561,7 @@ qt5_wrap_cpp(MOC_HEADERS
 	src/LoginPage.h
 	src/MainWindow.h
 	src/MxcImageProvider.h
-	src/RegisterPage.h
-	src/SSOHandler.h
+    src/RegisterPage.h
 	src/TrayIcon.h
 	src/UserSettingsPage.h
 	src/UsersModel.h
@@ -566,6 +569,11 @@ qt5_wrap_cpp(MOC_HEADERS
 	src/WebRTCSession.h
 	src/WelcomePage.h
 	)
+
+# Android currently doesn't support SSO.
+if(NOT ANDROID)
+	qt5_wrap_cpp(MOC_HEADERS src/SSOHandler.h)
+endif()
 
 #
 # Bundle translations.
@@ -592,7 +600,7 @@ elseif (WIN32)
 
 	set(SRC_FILES ${SRC_FILES} src/notifications/ManagerWin.cpp src/wintoastlib.cpp)
 elseif(ANDROID)
-    #set(SRC_FILES ${SRC_FILES} src/notifications/ManagerAndroid.cpp) # does nothing ATM
+    set(SRC_FILES ${SRC_FILES} src/notifications/ManagerAndroid.cpp) # does nothing ATM
 else ()
 	set(SRC_FILES ${SRC_FILES} src/notifications/ManagerLinux.cpp)
 endif ()
@@ -630,7 +638,7 @@ elseif(WIN32)
 		target_compile_options(nheko PUBLIC "/Zc:__cplusplus")
 	endif()
 elseif(ANDROID)
-    # link with nothing at all
+    # link with nothing extra at all
 else()
 	target_link_libraries (nheko PRIVATE Qt5::DBus)
 endif()
@@ -655,8 +663,11 @@ target_link_libraries(nheko PRIVATE
 	qt5keychain
 	nlohmann_json::nlohmann_json
 	lmdbxx::lmdbxx
-	liblmdb::lmdb
-	SingleApplication::SingleApplication)
+    liblmdb::lmdb)
+
+if(NOT ANDROID)
+    target_link_libraries(nheko PRIVATE SingleApplication::SingleApplication)
+endif()
 
 if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16.0")
 	target_precompile_headers(nheko
