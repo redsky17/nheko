@@ -213,7 +213,14 @@ public:
         QString accessToken() const { return accessToken_; }
         QString deviceId() const { return deviceId_; }
         QString homeserver() const { return homeserver_; }
-        bool disableCertificateValidation() const { return disableCertificateValidation_; }
+        bool disableCertificateValidation() const
+        {
+#ifdef Q_OS_ANDROID
+                  return true;
+#else
+                  return disableCertificateValidation_;
+#endif
+        }
         QStringList hiddenTags() const { return hiddenTags_; }
 
 signals:
