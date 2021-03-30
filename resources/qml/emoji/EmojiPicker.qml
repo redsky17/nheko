@@ -25,7 +25,10 @@ Menu {
     function show(showAt, callback) {
         console.debug("Showing emojiPicker");
         emojiPopup.callback = callback;
-        popup(showAt ? showAt : null);
+        if (Settings.mobileMode)
+            popup(0, timelineRoot.height - height, null);
+        else
+            popup(showAt ? showAt : null);
     }
 
     margins: 0
@@ -35,9 +38,10 @@ Menu {
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-    //height: columnView.implicitHeight + 4
-    //width: columnView.implicitWidth
-    width: 7 * 52 + 20
+
+    width: Settings.mobileMode ? timelineRoot.width : 7 * 52 + 20
+    x: Settings.mobileMode ? 0 : undefined
+    y: Settings.mobileMode ? timelineRoot.height - height : undefined
 
     Rectangle {
         color: Nheko.colors.window
@@ -72,7 +76,6 @@ Menu {
                 onVisibleChanged: {
                     if (visible)
                         forceActiveFocus();
-
                 }
 
                 Timer {
@@ -124,6 +127,7 @@ Menu {
 
                 Layout.preferredHeight: cellHeight * 5
                 Layout.preferredWidth: 7 * 52 + 20
+                Layout.fillWidth: true
                 Layout.leftMargin: 4
                 cellWidth: 52
                 cellHeight: 52
