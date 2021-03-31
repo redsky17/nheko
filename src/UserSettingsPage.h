@@ -216,9 +216,9 @@ public:
         bool disableCertificateValidation() const
         {
 #ifdef Q_OS_ANDROID
-                  return true;
+                return true;
 #else
-                  return disableCertificateValidation_;
+                return disableCertificateValidation_;
 #endif
         }
         QStringList hiddenTags() const { return hiddenTags_; }
