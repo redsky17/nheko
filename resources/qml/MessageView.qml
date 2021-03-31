@@ -50,7 +50,7 @@ ScrollView {
             property var attachedPos: chat.contentY, attached ? chat.mapFromItem(attached, attached ? attached.width - width : 0, -height) : null
             readonly property int padding: 4
 
-            visible: Settings.buttonsInTimeline && !!attached && (attached.hovered || messageActionHover.hovered)
+            visible: !Settings.mobileMode && (Settings.buttonsInTimeline && !!attached && (attached.hovered || messageActionHover.hovered))
             x: attached ? attachedPos.x : 0
             y: attached ? attachedPos.y : 0
             z: 10
@@ -129,6 +129,13 @@ ScrollView {
 
             }
 
+        }
+
+        MobileMessageContextPopup {
+            id: mobileContextPopup
+
+            visible: false
+            anchors.fill: parent
         }
 
         ScrollHelper {
@@ -457,7 +464,6 @@ ScrollView {
                         }
                     }
                 }
-
             }
 
             Connections {
@@ -511,6 +517,9 @@ ScrollView {
             else
                 open();
         }
+
+        // make sure that we close the popup when this menu is closed
+        onAboutToHide: if (mobileContextPopup.visible) mobileContextPopup.hide()
 
         Platform.MenuItem {
             visible: messageContextMenu.text

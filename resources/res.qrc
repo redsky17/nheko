@@ -9,7 +9,6 @@
         <file>icons/ui/do-not-disturb-rounded-sign@2x.png</file>
         <file>icons/ui/round-remove-button.png</file>
         <file>icons/ui/round-remove-button@2x.png</file>
-
         <file>icons/ui/double-tick-indicator.png</file>
         <file>icons/ui/double-tick-indicator@2x.png</file>
         <file>icons/ui/lock.png</file>
@@ -54,22 +53,17 @@
         <file>icons/ui/pause-symbol@2x.png</file>
         <file>icons/ui/remove-symbol.png</file>
         <file>icons/ui/remove-symbol@2x.png</file>
-
         <file>icons/ui/world.png</file>
         <file>icons/ui/world@2x.png</file>
-
         <file>icons/ui/tag.png</file>
         <file>icons/ui/tag@2x.png</file>
         <file>icons/ui/star.png</file>
         <file>icons/ui/star@2x.png</file>
         <file>icons/ui/lowprio.png</file>
         <file>icons/ui/lowprio@2x.png</file>
-
         <file>icons/ui/edit.png</file>
         <file>icons/ui/edit@2x.png</file>
-    
         <file>icons/ui/mail-reply.png</file>
-
         <file>icons/ui/place-call.png</file>
         <file>icons/ui/end-call.png</file>
         <file>icons/ui/microphone-mute.png</file>
@@ -77,7 +71,6 @@
         <file>icons/ui/screen-share.png</file>
         <file>icons/ui/toggle-camera-view.png</file>
         <file>icons/ui/video-call.png</file>
-
         <file>icons/emoji-categories/people.png</file>
         <file>icons/emoji-categories/people@2x.png</file>
         <file>icons/emoji-categories/nature.png</file>
@@ -98,16 +91,12 @@
     <qresource prefix="/logos">
         <file>nheko.png</file>
         <file>nheko.svg</file>
-
         <file>splash.png</file>
         <file>splash@2x.png</file>
-
         <file>register.png</file>
         <file>register@2x.png</file>
-
         <file>login.png</file>
         <file>login@2x.png</file>
-
         <file>nheko-512.png</file>
         <file>nheko-256.png</file>
         <file>nheko-128.png</file>
@@ -122,11 +111,14 @@
     </qresource>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
+<<<<<<< HEAD
 
         <file>qml/Root.qml</file>
         <file>qml/ChatPage.qml</file>
         <file>qml/CommunitiesList.qml</file>
         <file>qml/RoomList.qml</file>
+=======
+>>>>>>> 841d149f (Create a mobile popup menu)
         <file>qml/TimelineView.qml</file>
         <file>qml/Avatar.qml</file>
         <file>qml/Completer.qml</file>
@@ -184,6 +176,7 @@
         <file>qml/components/AdaptiveLayout.qml</file>
         <file>qml/components/AdaptiveLayoutElement.qml</file>
         <file>qml/components/FlatButton.qml</file>
+        <file>qml/MobileMessageContextPopup.qml</file>
     </qresource>
     <qresource prefix="/media">
         <file>media/ring.ogg</file>

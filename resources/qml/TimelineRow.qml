@@ -11,6 +11,7 @@ import QtQuick.Window 2.2
 import im.nheko 1.0
 
 Item {
+<<<<<<< HEAD
     id: r
 
     required property double proportionalHeight
@@ -40,6 +41,9 @@ Item {
     required property int trustlevel
     required property var timestamp
     required property int status
+=======
+    id: timelineRowRoot
+>>>>>>> 841d149f (Create a mobile popup menu)
 
     anchors.left: parent.left
     anchors.right: parent.right
@@ -63,8 +67,19 @@ Item {
     }
 
     TapHandler {
+<<<<<<< HEAD
         onLongPressed: messageContextMenu.show(eventId, type, isSender, isEncrypted, isEditable, contentItem.child.hoveredLink, contentItem.child.copyText)
         onDoubleTapped: chat.model.reply = eventId
+=======
+        onLongPressed: {
+            if (Settings.mobileMode)
+                mobileContextPopup.show(timelineRowRoot, model);
+            else
+                messageContextMenu.show(model.id, model.type, model.isSender, model.isEncrypted, model.isEditable, contentItem.child.hoveredLink, contentItem.child.copyText)
+
+        }
+        onDoubleTapped: chat.model.reply = model.id
+>>>>>>> 841d149f (Create a mobile popup menu)
         gesturePolicy: TapHandler.ReleaseWithinBounds
     }
 
