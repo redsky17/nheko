@@ -13,16 +13,133 @@ Item {
     function show(attachment, messageModel) {
         attached = attachment
         model = messageModel
-        visible = true
-        popup.state = "shown"
+        state = "shown"
     }
 
     function hide() {
-        popup.state = "hidden"
-        visible = false
+        state = "hidden"
         attached = undefined
         model = undefined
     }
+
+    // TODO: make this work
+    states: [
+        State {
+            name: "hidden"
+
+            PropertyChanges {
+                target: popupRoot
+                visible: false
+            }
+
+            PropertyChanges {
+                target: popup
+                y: timelineRoot.height + 1 // hidden
+                visible: false
+            }
+
+            PropertyChanges {
+                target: overlay
+                visible: false
+            }
+        },
+        State {
+            name: "shown"
+
+            PropertyChanges {
+                target: popupRoot
+                visible: true
+            }
+
+            PropertyChanges {
+                target: popup
+                y: timelineRoot.height - popup.height
+                visible: true
+            }
+
+            PropertyChanges {
+                target: overlay
+                visible: true
+            }
+        }
+    ]
+    state: "hidden"
+
+    transitions: [
+            Transition {
+            from: "hidden"
+            to: "shown"
+
+            SequentialAnimation {
+                ParallelAnimation {
+                    NumberAnimation {
+                        target: popupRoot
+                        property: "visible"
+                        duration: 0
+                    }
+
+                    NumberAnimation {
+                        target: popup
+                        property: "visible"
+                        duration: 0
+                    }
+                }
+
+                ParallelAnimation {
+                    NumberAnimation {
+                        target: popup
+                        property: "y"
+                        duration: 500
+                        easing.type: Easing.InOutQuad
+                    }
+
+                    NumberAnimation {
+                        target: overlay
+                        property: "visible"
+                        duration: 500
+                        easing.type: Easing.InQuad
+                    }
+                }
+            }
+        },
+
+        Transition {
+            from: "shown"
+            to: "hidden"
+
+            SequentialAnimation {
+                ParallelAnimation {
+                    NumberAnimation {
+                        target: popup
+                        property: "y"
+                        duration: 500
+                        easing.type: Easing.InOutQuad
+                    }
+
+                    NumberAnimation {
+                        target: overlay
+                        property: "visible"
+                        duration: 500
+                        easing.type: Easing.InQuad
+                    }
+                }
+
+                ParallelAnimation {
+                    NumberAnimation {
+                        target: popupRoot
+                        property: "visible"
+                        duration: 0
+                    }
+
+                    NumberAnimation {
+                        target: popup
+                        property: "visible"
+                        duration: 0
+                    }
+                }
+            }
+        }
+    ]
 
     property Item attached: null
     property alias model: row.model
@@ -37,41 +154,6 @@ Item {
         height: 75
         width: parent.width
         color: colors.window
-
-        // TODO: make this work
-        states: [
-            State {
-                name: "hidden"
-                PropertyChanges {
-                    target: popup
-                    y: timelineRoot.height + 1 // hidden
-                    visible: false
-                }
-            },
-            State {
-                name: "shown"
-                PropertyChanges {
-                    target: popup
-                    y: timelineRoot.height - popup.height
-                    visible: true
-                }
-            }
-        ]
-        state: "hidden"
-
-        transitions: Transition {
-            from: "hidden"
-            to: "shown"
-            reversible: true
-
-            NumberAnimation {
-                target: popup
-                property: y
-                duration: 5000
-                easing.type: Easing.InOutQuad
-                alwaysRunToEnd: true
-            }
-        }
 
         RowLayout {
             id: row
@@ -185,13 +267,13 @@ Item {
         TapHandler {
             onTapped: popupRoot.hide()
         }
-    }
 
-    // TODO: this needs some love
-    FastBlur {
-        z: overlay.z - 1
-        anchors.fill: parent
-        source: timelineRoot
-        radius: 50
+        // TODO: this needs some work; it doesn't blur very well
+        FastBlur {
+            z: overlay.z - 1
+            anchors.fill: parent
+            source: timelineRoot
+            radius: 50
+        }
     }
 }
