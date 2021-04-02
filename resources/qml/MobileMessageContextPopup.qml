@@ -4,7 +4,6 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import im.nheko 1.0
 import "./emoji"
-import "./delegates"
 
 Item {
     id: popupRoot
