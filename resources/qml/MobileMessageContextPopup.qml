@@ -26,7 +26,6 @@ Item {
     property Item attached: null
     property alias model: row.model
 
-    // TODO: make this work
     states: [
         State {
             name: "hidden"
@@ -38,7 +37,7 @@ Item {
 
             PropertyChanges {
                 target: popup
-                y: timelineRoot.height + 1 // hidden
+                anchors.bottomMargin: -popup.height
                 visible: false
             }
 
@@ -58,7 +57,7 @@ Item {
 
             PropertyChanges {
                 target: popup
-                y: timelineRoot.height - popup.height
+                anchors.bottomMargin: 0
                 visible: true
             }
 
@@ -85,7 +84,7 @@ Item {
                 ParallelAnimation {
                     NumberAnimation {
                         target: popup
-                        property: "y"
+                        property: "anchors.bottomMargin"
                         duration: 250
                         easing.type: Easing.InOutQuad
                     }
@@ -108,7 +107,7 @@ Item {
                 ParallelAnimation {
                     NumberAnimation {
                         target: popup
-                        property: "y"
+                        property: "anchors.bottomMargin"
                         duration: 250
                         easing.type: Easing.InOutQuad
                     }
@@ -134,9 +133,9 @@ Item {
         id: popup
 
         radius: 20
-        y: timelineRoot.height + 1
         z: 20
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: -height
         height: 75
         width: parent.width
         color: colors.window
