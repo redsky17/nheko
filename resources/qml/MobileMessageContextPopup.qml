@@ -250,6 +250,13 @@ Item {
         visible: false
         opacity: 0
 
+        Rectangle {
+            anchors.fill: parent
+            z: parent.z - 1
+            opacity: 0.5
+            color: "gray"
+        }
+
         TapHandler {
             onTapped: popupRoot.hide()
         }
