@@ -31,11 +31,47 @@ Item {
         id: popup
 
         radius: 20
+        y: timelineRoot.height + 1
         z: 20
         anchors.bottom: parent.bottom
         height: 75
         width: parent.width
         color: colors.window
+
+        // TODO: make this work
+        states: [
+            State {
+                name: "hidden"
+                PropertyChanges {
+                    target: popup
+                    y: timelineRoot.height + 1 // hidden
+                    visible: false
+                }
+            },
+            State {
+                name: "shown"
+                PropertyChanges {
+                    target: popup
+                    y: timelineRoot.height - popup.height
+                    visible: true
+                }
+            }
+        ]
+        state: "hidden"
+
+        transitions: Transition {
+            from: "hidden"
+            to: "shown"
+            reversible: true
+
+            NumberAnimation {
+                target: popup
+                property: y
+                duration: 5000
+                easing.type: Easing.InOutQuad
+                alwaysRunToEnd: true
+            }
+        }
 
         RowLayout {
             id: row
