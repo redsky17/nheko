@@ -49,6 +49,7 @@ Rectangle {
             width: Nheko.avatarSize
             height: Nheko.avatarSize
             visible: showBackButton
+            imageScale: 0.5 // because this image at full scale looks huge, tacky and distracting
             image: ":/icons/icons/ui/angle-pointing-to-left.png"
             ToolTip.visible: hovered
             ToolTip.text: qsTr("Back to room list")
