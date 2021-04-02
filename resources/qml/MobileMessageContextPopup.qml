@@ -13,11 +13,11 @@ Item {
     function show(attachment, messageModel) {
         attached = attachment
         model = messageModel
-        state = "shown"
+        popupRoot.state = "shown"
     }
 
     function hide() {
-        state = "hidden"
+        popupRoot.state = "hidden"
         attached = undefined
         model = undefined
     }
@@ -246,7 +246,7 @@ Item {
     FastBlur {
         id: overlay
         anchors.fill: parent
-        source: timelineRoot
+        source: timelineLayout
         radius: 50
         z: popupBottomBar.z - 1
         visible: false
