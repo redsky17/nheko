@@ -178,6 +178,26 @@ Item {
                 }
             }
 
+            ImageButton {
+                id: deleteButton
+
+                buttonTextColor: colors.buttonText
+                Layout.minimumWidth: 20
+                Layout.preferredWidth: 35
+                Layout.minimumHeight: Layout.minimumWidth
+                Layout.preferredHeight: Layout.preferredWidth
+                height: width
+                Layout.alignment: Qt.AlignHCenter
+                hoverEnabled: true
+                image: ":/icons/icons/ui/delete.png"
+                ToolTip.visible: hovered
+                ToolTip.text: qsTr("Remove")
+                onClicked: {
+                    TimelineManager.timeline.redactEvent(row.model.id)
+                    popupRoot.hide()
+                }
+            }
+
             EmojiButton {
                 id: reactButton
 
