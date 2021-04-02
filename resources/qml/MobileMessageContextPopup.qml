@@ -22,6 +22,11 @@ Item {
         model = undefined
     }
 
+    state: "hidden"
+    visible: false
+    property Item attached: null
+    property alias model: row.model
+
     // TODO: make this work
     states: [
         State {
@@ -41,6 +46,7 @@ Item {
             PropertyChanges {
                 target: overlay
                 visible: false
+                opacity: 0
             }
         },
         State {
@@ -60,10 +66,10 @@ Item {
             PropertyChanges {
                 target: overlay
                 visible: true
+                opacity: 1
             }
         }
     ]
-    state: "hidden"
 
     transitions: [
             Transition {
@@ -71,32 +77,24 @@ Item {
             to: "shown"
 
             SequentialAnimation {
-                ParallelAnimation {
-                    NumberAnimation {
-                        target: popupRoot
-                        property: "visible"
-                        duration: 0
-                    }
-
-                    NumberAnimation {
-                        target: popup
-                        property: "visible"
-                        duration: 0
-                    }
+                NumberAnimation {
+                    targets: [popupRoot, popup, overlay]
+                    properties: "visible"
+                    duration: 0
                 }
 
                 ParallelAnimation {
                     NumberAnimation {
                         target: popup
                         property: "y"
-                        duration: 500
+                        duration: 250
                         easing.type: Easing.InOutQuad
                     }
 
                     NumberAnimation {
                         target: overlay
-                        property: "visible"
-                        duration: 500
+                        property: "opacity"
+                        duration: 250
                         easing.type: Easing.InQuad
                     }
                 }
@@ -112,37 +110,26 @@ Item {
                     NumberAnimation {
                         target: popup
                         property: "y"
-                        duration: 500
+                        duration: 250
                         easing.type: Easing.InOutQuad
                     }
 
                     NumberAnimation {
                         target: overlay
-                        property: "visible"
-                        duration: 500
+                        property: "opacity"
+                        duration: 250
                         easing.type: Easing.InQuad
                     }
                 }
 
-                ParallelAnimation {
-                    NumberAnimation {
-                        target: popupRoot
-                        property: "visible"
-                        duration: 0
-                    }
-
-                    NumberAnimation {
-                        target: popup
-                        property: "visible"
-                        duration: 0
-                    }
+                NumberAnimation {
+                    targets: [popupRoot, popup, overlay]
+                    properties: "visible"
+                    duration: 0
                 }
             }
         }
     ]
-
-    property Item attached: null
-    property alias model: row.model
 
     Rectangle {
         id: popup
@@ -256,24 +243,17 @@ Item {
         }
     }
 
-    Rectangle {
+    FastBlur {
         id: overlay
         anchors.fill: parent
+        source: timelineRoot
+        radius: 50
         z: popupBottomBar.z - 1
-
-        color: "gray"
-        opacity: 0.5
+        visible: false
+        opacity: 0
 
         TapHandler {
             onTapped: popupRoot.hide()
-        }
-
-        // TODO: this needs some work; it doesn't blur very well
-        FastBlur {
-            z: overlay.z - 1
-            anchors.fill: parent
-            source: timelineRoot
-            radius: 50
         }
     }
 }
