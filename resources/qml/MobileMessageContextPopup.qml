@@ -75,10 +75,9 @@ Item {
             to: "shown"
 
             SequentialAnimation {
-                NumberAnimation {
+                PropertyAction {
                     targets: [popupRoot, popup, overlay]
                     properties: "visible"
-                    duration: 0
                 }
 
                 ParallelAnimation {
@@ -120,10 +119,9 @@ Item {
                     }
                 }
 
-                NumberAnimation {
+                PropertyAction {
                     targets: [popupRoot, popup, overlay]
                     properties: "visible"
-                    duration: 0
                 }
             }
         }
