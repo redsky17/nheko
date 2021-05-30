@@ -187,7 +187,7 @@ Item {
                 height: width
                 Layout.alignment: Qt.AlignHCenter
                 hoverEnabled: true
-                image: ":/icons/icons/ui/delete.png"
+                image: ":/icons/icons/ui/trash-alt.svg"
                 ToolTip.visible: hovered
                 ToolTip.text: qsTr("Remove")
                 onClicked: {
