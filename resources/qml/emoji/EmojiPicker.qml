@@ -127,6 +127,7 @@ Menu {
 
                 Layout.preferredHeight: cellHeight * 5
                 Layout.preferredWidth: 7 * 52 + 20
+                Layout.maximumWidth: timelineRoot.width
                 Layout.fillWidth: true
                 Layout.leftMargin: 4
                 cellWidth: 52
