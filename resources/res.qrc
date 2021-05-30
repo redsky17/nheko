@@ -87,6 +87,7 @@
         <file>icons/emoji-categories/symbols@2x.png</file>
         <file>icons/emoji-categories/flags.png</file>
         <file>icons/emoji-categories/flags@2x.png</file>
+        <file>icons/ui/trash-alt.svg</file>
     </qresource>
     <qresource prefix="/logos">
         <file>nheko.png</file>
