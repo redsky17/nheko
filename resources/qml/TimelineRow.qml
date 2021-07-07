@@ -41,12 +41,16 @@ Item {
     RowLayout {
         id: row
 
+        property int avatarSize: Math.ceil(fontMetrics.lineSpacing * 1.5)
+
         anchors.rightMargin: 1
-        anchors.leftMargin: Nheko.avatarSize + 16
+        anchors.leftMargin: avatarSize + Nheko.paddingMedium
         anchors.left: parent.left
         anchors.right: parent.right
 
         Column {
+            id: messageCol
+
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop
             spacing: 4
@@ -111,18 +115,32 @@ Item {
 
         }
 
-        Label {
-            Layout.alignment: Qt.AlignRight | Qt.AlignTop
-            text: model.timestamp.toLocaleTimeString(Locale.ShortFormat)
-            width: Math.max(implicitWidth, text.length * fontMetrics.maximumCharacterWidth)
-            color: Nheko.inactiveColors.text
-            ToolTip.visible: ma.hovered
-            ToolTip.text: Qt.formatDateTime(model.timestamp, Qt.DefaultLocaleLongDate)
+    }
 
-            HoverHandler {
-                id: ma
-            }
+    Label {
+        id: ts
 
+        property int marginPadding: Math.floor((fontMetrics.font.pixelSize - smallFontMetrics.font.pixelSize) / 2)
+
+        anchors.left: parent.left
+        anchors.leftMargin: marginPadding
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: (reactionRow.height > 0 ? reactionRow.height + messageCol.spacing : 0) + marginPadding
+        text: model.timestamp.toLocaleTimeString(Locale.ShortFormat)
+        width: Math.max(implicitWidth, text.length * smallFontMetrics.maximumCharacterWidth)
+        font.pixelSize: smallFontMetrics.font.pixelSize
+        color: Nheko.inactiveColors.text
+        ToolTip.visible: ma.hovered
+        ToolTip.text: Qt.formatDateTime(model.timestamp, Qt.DefaultLocaleLongDate)
+
+        FontMetrics {
+            id: smallFontMetrics
+
+            font.pixelSize: Math.ceil(fontMetrics.font.pixelSize * 0.6)
+        }
+
+        HoverHandler {
+            id: ma
         }
 
     }

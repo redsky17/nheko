@@ -241,8 +241,11 @@ ScrollView {
                     Avatar {
                         id: messageUserAvatar
 
-                        width: Nheko.avatarSize
-                        height: Nheko.avatarSize
+                        property int avatarSize: Math.ceil(fontMetrics.lineSpacing * 1.5)
+
+                        width: avatarSize
+                        height: avatarSize
+                        y: -Math.ceil(fontMetrics.lineSpacing * 0.25)
                         url: modelData ? chat.model.avatarUrl(modelData.userId).replace("mxc://", "image://MxcImage/") : ""
                         displayName: modelData ? modelData.userName : ""
                         userid: modelData ? modelData.userId : ""
