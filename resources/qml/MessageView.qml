@@ -75,6 +75,72 @@ ScrollView {
                 anchors.centerIn: parent
                 spacing: messageActions.padding
 
+                // quick reactions
+                // TODO: these should theoretically be scraped from the emojis that are most often reacted with
+                TextButton {
+                    id: likeButton
+
+                    visible: chat.model ? chat.model.permissions.canSend(MtxEvent.Reaction) && Settings.quickReactions : false
+                    buttonTextColor: colors.buttonText
+                    width: 16
+                    hoverEnabled: true
+                    text: "👍"
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Like")
+                    onClicked: {
+                        TimelineManager.queueReactionMessage(row.model.id, text);
+                        TimelineManager.focusMessageInput();
+                    }
+                }
+
+                TextButton {
+                    id: loveButton
+
+                    visible: chat.model ? chat.model.permissions.canSend(MtxEvent.Reaction) && Settings.quickReactions : false
+                    buttonTextColor: colors.buttonText
+                    width: 16
+                    hoverEnabled: true
+                    text: "❤"
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Love")
+                    onClicked: {
+                        TimelineManager.queueReactionMessage(row.model.id, text);
+                        TimelineManager.focusMessageInput();
+                    }
+                }
+
+                TextButton {
+                    id: laughButton
+
+                    visible: chat.model ? chat.model.permissions.canSend(MtxEvent.Reaction) && Settings.quickReactions : false
+                    buttonTextColor: colors.buttonText
+                    width: 16
+                    hoverEnabled: true
+                    text: "🤣"
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Laugh")
+                    onClicked: {
+                        TimelineManager.queueReactionMessage(row.model.id, text);
+                        TimelineManager.focusMessageInput();
+                    }
+                }
+
+                TextButton {
+                    id: smileButton
+
+                    visible: chat.model ? chat.model.permissions.canSend(MtxEvent.Reaction) && Settings.quickReactions : false
+                    buttonTextColor: colors.buttonText
+                    width: 16
+                    hoverEnabled: true
+                    text: "🙂"
+                    ToolTip.visible: hovered
+                    ToolTip.text: qsTr("Smile")
+                    onClicked: {
+                        TimelineManager.queueReactionMessage(row.model.id, text);
+                        TimelineManager.focusMessageInput();
+                    }
+                }
+
                 ImageButton {
                     id: editButton
 
