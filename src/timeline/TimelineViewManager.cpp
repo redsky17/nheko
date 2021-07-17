@@ -29,12 +29,14 @@
 #include "dialogs/ImageOverlay.h"
 #include "emoji/EmojiModel.h"
 #include "emoji/Provider.h"
+#include "RoomDirectoryModel.h"
 #include "ui/NhekoCursorShape.h"
 #include "ui/NhekoDropArea.h"
 #include "ui/NhekoGlobalObject.h"
 
 Q_DECLARE_METATYPE(mtx::events::collections::TimelineEvents)
 Q_DECLARE_METATYPE(std::vector<DeviceInfo>)
+Q_DECLARE_METATYPE(std::vector<mtx::responses::PublicRoomsChunk>)
 
 namespace msgs = mtx::events::msg;
 
@@ -145,6 +147,8 @@ TimelineViewManager::TimelineViewManager(CallManager *callManager, ChatPage *par
         qRegisterMetaType<mtx::events::msg::KeyVerificationRequest>();
         qRegisterMetaType<mtx::events::msg::KeyVerificationStart>();
 
+        qRegisterMetaType<std::vector<mtx::responses::PublicRoomsChunk>>();
+
         qmlRegisterUncreatableMetaObject(qml_mtx_events::staticMetaObject,
                                          "im.nheko",
                                          1,
@@ -247,6 +251,7 @@ TimelineViewManager::TimelineViewManager(CallManager *callManager, ChatPage *par
                                          0,
                                          "EmojiCategory",
                                          "Error: Only enums");
+        qmlRegisterType<RoomDirectoryModel>("im.nheko.RoomDirectoryModel", 1, 0, "RoomDirectoryModel");
 
 #ifdef USE_QUICK_VIEW
         view      = new QQuickView(parent);
@@ -602,6 +607,13 @@ TimelineViewManager::focusTimeline()
 {
         getWidget()->setFocus();
 }
+
+// void
+// TimelineViewManager::showRoomDirectory()
+// {
+//         nhlog::ui()->debug("Plumbed");
+//         emit showPublicRooms();
+// }
 
 void
 TimelineViewManager::forwardMessageToRoom(mtx::events::collections::TimelineEvents *e,

@@ -153,6 +153,7 @@
         <file>qml/emoji/EmojiButton.qml</file>
         <file>qml/emoji/EmojiPicker.qml</file>
         <file>qml/UserProfile.qml</file>
+        <file>qml/RoomDirectory.qml</file>
         <file>qml/delegates/MessageDelegate.qml</file>
         <file>qml/delegates/TextMessage.qml</file>
         <file>qml/delegates/NoticeMessage.qml</file>
