@@ -63,9 +63,21 @@ Item {
     }
 
     TapHandler {
-        onLongPressed: messageContextMenu.show(eventId, type, isSender, isEncrypted, isEditable, contentItem.child.hoveredLink, contentItem.child.copyText)
-        onDoubleTapped: chat.model.reply = eventId
+        enabled: !Settings.mobileMode
+        onDoubleTapped: chat.model.reply = model.id
+        onLongPressed: {
+            if (Settings.mobileMode)
+                mobileContextPopup.show(timelineRowRoot, model);
+            else
+                messageContextMenu.show(model.id, model.type, model.isSender, model.isEncrypted, model.isEditable, contentItem.child.hoveredLink, contentItem.child.copyText)
+
+        }
         gesturePolicy: TapHandler.ReleaseWithinBounds
+    }
+
+    TapHandler {
+        enabled: Settings.mobileMode
+        onLongPressed: mobileContextPopup.show(timelineRowRoot, model);
     }
 
     RowLayout {

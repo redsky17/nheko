@@ -15,6 +15,7 @@ AbstractButton {
     property color highlightColor: Nheko.colors.highlight
     property color buttonTextColor: Nheko.colors.buttonText
     property bool changeColorOnHover: true
+    property alias imageScale: buttonImg.scale
 
     focusPolicy: Qt.NoFocus
     width: 16

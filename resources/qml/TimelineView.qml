@@ -223,7 +223,7 @@ Item {
         }
 
         Item {
-            Layout.fillHeight: true
+            Layout.fillHeight: tru
         }
 
     }
@@ -259,4 +259,12 @@ Item {
         }
     }
 
+    MobileMessageContextPopup {
+        id: mobileContextPopup
+
+        visible: false
+        anchors.fill: parent
+    }
+
 }
+

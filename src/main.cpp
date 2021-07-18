@@ -29,7 +29,10 @@
 #include "MatrixClient.h"
 #include "Utils.h"
 #include "config/nheko.h"
+
+#ifndef Q_OS_ANDROID
 #include "singleapplication.h"
+#endif
 
 #if defined(Q_OS_MAC)
 #include "emoji/MacHelper.h"
@@ -169,6 +172,9 @@ main(int argc, char *argv[])
                 }
         }
 
+#ifdef Q_OS_ANDROID
+        QApplication app(argc, argv);
+#else
         SingleApplication app(argc,
                               argv,
                               true,
@@ -184,6 +190,7 @@ main(int argc, char *argv[])
                 app.sendMessage(matrixUri.toUtf8());
                 return 0;
         }
+#endif
 
         QCommandLineParser parser;
         parser.addHelpOption();
@@ -269,6 +276,8 @@ main(int argc, char *argv[])
                         nhlog::net()->debug("bye");
                 }
         });
+
+#ifndef Q_OS_ANDROID
         QObject::connect(&app, &SingleApplication::instanceStarted, &w, [&w]() {
                 w.show();
                 w.raise();
@@ -292,6 +301,7 @@ main(int argc, char *argv[])
                                                          QObject::disconnect(uriConnection);
                                                  });
         }
+#endif
         QDesktopServices::setUrlHandler("matrix", ChatPage::instance(), "handleMatrixUri");
 
 #if defined(Q_OS_MAC)

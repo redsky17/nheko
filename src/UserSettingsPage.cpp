@@ -13,6 +13,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <QOperatingSystemVersion>
 #include <QPainter>
 #include <QProcessEnvironment>
 #include <QPushButton>
@@ -37,6 +38,15 @@
 #include "ui/ToggleButton.h"
 
 #include "config/nheko.h"
+
+namespace UserSettingsDefault {
+constexpr auto os = QOperatingSystemVersion::currentType();
+constexpr bool mobileOS =
+  (os == QOperatingSystemVersion::Android || os == QOperatingSystemVersion::IOS);
+constexpr bool mobileMode = mobileOS;
+// TODO: this should always be false; this is a temporary hack to get Android working
+constexpr bool disableCertificateValidation = mobileOS ? true : false;
+}
 
 QSharedPointer<UserSettings> UserSettings::instance_;
 
@@ -92,8 +102,8 @@ UserSettings::load(std::optional<QString> profile)
         privacyScreenTimeout_ = settings.value("user/privacy_screen_timeout", 0).toInt();
         shareKeysWithTrustedUsers_ =
           settings.value("user/share_keys_with_trusted_users", true).toBool();
-        mobileMode_        = settings.value("user/mobile_mode", false).toBool();
-        emojiFont_         = settings.value("user/emoji_font_family", "default").toString();
+        mobileMode_ = settings.value("user/mobile_mode", UserSettingsDefault::mobileMode).toBool();
+        emojiFont_  = settings.value("user/emoji_font_family", "default").toString();
         baseFontSize_      = settings.value("user/font_size", QFont().pointSizeF()).toDouble();
         auto tempPresence  = settings.value("user/presence", "").toString().toStdString();
         auto presenceValue = QMetaEnum::fromType<Presence>().keyToValue(tempPresence.c_str());
@@ -123,8 +133,10 @@ UserSettings::load(std::optional<QString> profile)
         userId_      = settings.value(prefix + "auth/user_id", "").toString();
         deviceId_    = settings.value(prefix + "auth/device_id", "").toString();
 
-        disableCertificateValidation_ =
-          settings.value("disable_certificate_validation", false).toBool();
+        disableCertificateValidation_ = settings
+                                          .value("disable_certificate_validation",
+                                                 UserSettingsDefault::disableCertificateValidation)
+                                          .toBool();
 
         applyTheme();
 }

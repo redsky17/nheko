@@ -15,6 +15,10 @@
 #define NHEKO_DBUS_SYS
 #endif
 
+#ifdef Q_OS_ANDROID
+#undef NHEKO_DBUS_SYS
+#endif
+
 #if defined(NHEKO_DBUS_SYS)
 #include <QtDBus/QDBusArgument>
 #include <QtDBus/QDBusInterface>
