@@ -111,14 +111,10 @@
     </qresource>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
-<<<<<<< HEAD
-
         <file>qml/Root.qml</file>
         <file>qml/ChatPage.qml</file>
         <file>qml/CommunitiesList.qml</file>
         <file>qml/RoomList.qml</file>
-=======
->>>>>>> 841d149f (Create a mobile popup menu)
         <file>qml/TimelineView.qml</file>
         <file>qml/Avatar.qml</file>
         <file>qml/Completer.qml</file>
