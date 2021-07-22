@@ -477,12 +477,22 @@ ScrollView {
 
         }
 
-        footer: Spinner {
+        footer: Item {
             anchors.horizontalCenter: parent.horizontalCenter
-            running: chat.model && chat.model.paginationInProgress
-            foreground: Nheko.colors.mid
+            anchors.margins: Nheko.paddingLarge
             visible: chat.model && chat.model.paginationInProgress
-            z: 3
+            // hacky, but works
+            height: loadingSpinner.height + 2 * Nheko.paddingLarge
+
+            Spinner {
+                id: loadingSpinner
+
+                anchors.centerIn: parent
+                anchors.margins: Nheko.paddingLarge
+                running: chat.model && chat.model.paginationInProgress
+                foreground: Nheko.colors.mid
+                z: 3
+            }
         }
 
     }

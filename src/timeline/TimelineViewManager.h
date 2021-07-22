@@ -67,6 +67,7 @@ public:
         Q_INVOKABLE void openRoomMembers(QString room_id);
         Q_INVOKABLE void openRoomSettings(QString room_id);
         Q_INVOKABLE void openInviteUsers(QString roomId);
+        Q_INVOKABLE void openGlobalUserProfile(QString userId);
 
         Q_INVOKABLE void focusMessageInput();
         Q_INVOKABLE void openLeaveRoomDialog(QString roomid) const;
